@@ -49,4 +49,9 @@ sub monkey_get : Local : ActionClass('Serialize') {
     $c->stash->{'rest'} = { monkey => 'likes chicken!', };
 }
 
+sub echo_put :Local :ActionClass(Deserialize) :ActionClass(Serialize) {
+	my ($self, $c) = @_;
+	$self->status_ok( $c, entity => $c->req->data );
+}
+
 1;
