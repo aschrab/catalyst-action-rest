@@ -10,6 +10,7 @@ sub new {
     my $self = shift;
     my %p    = validate( @_, { 
             content_type => { type => SCALAR }, 
+			accept_types => { type => ARRAYREF, optional => 1 },
         }, 
     );
     my $ref  = {
@@ -29,6 +30,7 @@ sub new {
             my %p    = validate( @_, { url => { type => SCALAR }, }, );
             my $req  = HTTP::Request->new( "$method" => $p{'url'} );
             $req->content_type( $self->{'content_type'} );
+			$req->header( Accept => $self->{accept_types} ) if $self->{accept_types};
             return $req;
         };
     }
