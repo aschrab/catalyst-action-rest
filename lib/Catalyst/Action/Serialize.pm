@@ -29,7 +29,7 @@ sub execute {
 
     my ( $sclass, $sarg, $content_type ) =
       $self->_load_content_plugins( "Catalyst::Action::Serialize",
-        $controller, $c );
+        $controller, $c, 1 );
     unless ( defined($sclass) ) {
         if ( defined($content_type) ) {
             $c->log->info("Could not find a serializer for $content_type");

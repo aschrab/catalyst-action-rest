@@ -21,7 +21,7 @@ has [qw(_serialize_plugins _loaded_plugins)] => ( is => 'rw' );
 
 sub _load_content_plugins {
     my $self = shift;
-    my ( $search_path, $controller, $c ) = @_;
+    my ( $search_path, $controller, $c, $serialize ) = @_;
 
     unless ( defined( $self->_loaded_plugins ) ) {
         $self->_loaded_plugins( {} );
@@ -68,8 +68,15 @@ sub _load_content_plugins {
         $stashed = [ $stashed ] if not ref $stashed;
         push @accepted_types, @$stashed;
     }
-    # then content types requested by caller
-    push @accepted_types, @{ $c->request->accepted_content_types };
+
+    # then content types specified by caller
+    if( $serialize ) {
+        push @accepted_types, @{ $c->request->accepted_content_types };
+    }
+    else {
+        push @accepted_types, $c->request->content_type;
+    }
+
     # then the default
     push @accepted_types, $config->{'default'} if $config->{'default'};
     # pick the best match that we have a serializer mapping for
