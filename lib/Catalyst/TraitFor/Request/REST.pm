@@ -64,7 +64,7 @@ sub _build_accepted_content_types {
 
     # Lastly, use the content type of the request as a fallback
     $types{ $self->content_type } ||= 0
-        if 0 and $self->content_type;
+        if $self->content_type;
 
     [ sort { $types{$b} <=> $types{$a} } keys %types ];
 }
