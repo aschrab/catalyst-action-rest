@@ -29,10 +29,6 @@ sub _build_accepted_content_types {
 
     my %types;
 
-    # First, we use the content type in the HTTP Request.  It wins all.
-    $types{ $self->content_type } = 3
-        if $self->content_type;
-
     if ($self->method eq "GET" && $self->param('content-type')) {
         $types{ $self->param('content-type') } = 2;
     }
@@ -65,6 +61,10 @@ sub _build_accepted_content_types {
             $types{$type} = sprintf( '%.3f', $qvalue );
         }
     }
+
+    # Lastly, use the content type of the request as a fallback
+    $types{ $self->content_type } ||= 0
+        if 0 and $self->content_type;
 
     [ sort { $types{$b} <=> $types{$a} } keys %types ];
 }
