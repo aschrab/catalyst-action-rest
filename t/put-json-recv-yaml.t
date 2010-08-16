@@ -18,8 +18,12 @@ my $data = {
 };
 
 my $json = JSON->new->utf8;
-my $t = Test::Rest->new(content_type => 'application/json', accept_types => [$accept] );
-my $res = request( $t->post( url => '/echo_put', data => $json->encode($data) ) );
+my $t = Test::Rest->new(content_type => 'application/json' );
+my $res = request( $t->post(
+		url => '/echo_put',
+		data => $json->encode($data),
+		accept => $accept ,
+	) );
 
 ok( $res->is_success, "PUT succeeded" );
 
