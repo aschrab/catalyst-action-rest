@@ -112,7 +112,7 @@ for my $class ( $anon_class, 'Catalyst::Request::REST' ) {
                          */*
                          application/json
                        ) ],
-                   'accept header is parsed properly, and content-type header has precedence over accept' );
+                   'accept header is parsed properly, and accept header has precedence over content-type' );
         ok( ! $request->accept_only, 'accept_only is false' );
     }
 
@@ -130,14 +130,15 @@ for my $class ( $anon_class, 'Catalyst::Request::REST' ) {
         );
 
         is_deeply( $request->accepted_content_types,
-                   [ qw( application/json
+                   [ qw(
                          text/xml application/xml application/xhtml+xml
                          image/png
                          text/html
                          text/plain
                          */*
+                         application/json
                        ) ],
-                   'accept header is parsed properly, and content-type header has precedence over accept' );
+                   'accept header is parsed properly, and accept header has precedence over content-type' );
         ok( ! $request->accept_only, 'accept_only is false' );
     }
 
@@ -152,9 +153,10 @@ for my $class ( $anon_class, 'Catalyst::Request::REST' ) {
             'Accept' => 'text/plain,text/x-json',
         );
 
-        is_deeply( $request->accepted_content_types,
-                   [ qw( text/x-json
+        is_deeply( [sort @{$request->accepted_content_types}],
+                   [ qw(
                          text/plain
+                         text/x-json
                        ) ],
                    'each type appears only once' );
     }
@@ -170,7 +172,7 @@ for my $class ( $anon_class, 'Catalyst::Request::REST' ) {
             'Accept' => 'text/plain,application/json',
         );
 
-        is_deeply( $request->accepted_content_types,
+        is_deeply( [sort @{$request->accepted_content_types}],
                    [ qw( application/json
                          text/plain
                        ) ],
