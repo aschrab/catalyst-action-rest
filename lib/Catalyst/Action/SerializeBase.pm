@@ -21,7 +21,7 @@ has [qw(_serialize_plugins _loaded_plugins)] => ( is => 'rw' );
 
 sub _load_content_plugins {
     my $self = shift;
-    my ( $search_path, $controller, $c, $serialize ) = @_;
+    my ( $search_path, $controller, $c ) = @_;
 
     unless ( defined( $self->_loaded_plugins ) ) {
         $self->_loaded_plugins( {} );
@@ -70,12 +70,7 @@ sub _load_content_plugins {
     }
 
     # then content types specified by caller
-    if( $serialize ) {
-        push @accepted_types, @{ $c->request->accepted_content_types };
-    }
-    else {
-        push @accepted_types, $c->request->content_type;
-    }
+	push @accepted_types, $self->request_content_types($c);
 
     # then the default
     push @accepted_types, $config->{'default'} if $config->{'default'};

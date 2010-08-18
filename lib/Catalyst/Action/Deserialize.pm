@@ -41,6 +41,11 @@ sub execute {
     return 1;
 }
 
+sub request_content_types {
+    my ($self, $c) = @_;
+    $c->request->content_type;
+}
+
 __PACKAGE__->meta->make_immutable;
 
 =head1 NAME

@@ -29,7 +29,7 @@ sub execute {
 
     my ( $sclass, $sarg, $content_type ) =
       $self->_load_content_plugins( "Catalyst::Action::Serialize",
-        $controller, $c, 1 );
+        $controller, $c );
     unless ( defined($sclass) ) {
         if ( defined($content_type) ) {
             $c->log->info("Could not find a serializer for $content_type");
@@ -60,6 +60,11 @@ sub execute {
     }
 
     return 1;
+}
+
+sub request_content_types {
+    my ($self, $c) = @_;
+    @{ $c->request->accepted_content_types };
 }
 
 __PACKAGE__->meta->make_immutable;
