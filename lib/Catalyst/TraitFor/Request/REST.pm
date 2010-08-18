@@ -6,7 +6,7 @@ use namespace::autoclean;
 our $VERSION = '0.85';
 $VERSION = eval $VERSION;
 
-has [qw/ data accept_only /] => ( is => 'rw' );
+has [qw/ data /] => ( is => 'rw' );
 
 has accepted_content_types => (
     is       => 'ro',
@@ -38,8 +38,6 @@ sub _build_accepted_content_types {
     #
     # This is taken from chansen's Apache2::UploadProgress.
     if ( $self->header('Accept') ) {
-        $self->accept_only(1) unless keys %types;
-
         my $accept_header = $self->header('Accept');
         my $counter       = 0;
 

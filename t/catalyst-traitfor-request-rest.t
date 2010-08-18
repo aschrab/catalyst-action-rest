@@ -28,7 +28,6 @@ for my $class ( $anon_class, 'Catalyst::Request::REST' ) {
                    'content-type set in request headers is found' );
         is( $request->preferred_content_type, 'text/foobar',
             'preferred content type is text/foobar' );
-        ok( ! $request->accept_only, 'accept_only is false' );
         ok( $request->accepts('text/foobar'), 'accepts text/foobar' );
         ok( ! $request->accepts('text/html'), 'does not accept text/html' );
     }
@@ -45,7 +44,6 @@ for my $class ( $anon_class, 'Catalyst::Request::REST' ) {
                    'content-type set in request headers and type in parameters is found' );
         is( $request->preferred_content_type, 'text/fudge',
             'preferred content type is text/fudge' );
-        ok( ! $request->accept_only, 'accept_only is false' );
         ok( $request->accepts('text/foobar'), 'accepts text/foobar' );
         ok( $request->accepts('text/fudge'), 'accepts text/fudge' );
         ok( ! $request->accepts('text/html'), 'does not accept text/html' );
@@ -84,7 +82,6 @@ for my $class ( $anon_class, 'Catalyst::Request::REST' ) {
                    'accept header is parsed properly' );
         is( $request->preferred_content_type, 'text/xml',
             'preferred content type is text/xml' );
-        ok( $request->accept_only, 'accept_only is true' );
         ok( $request->accepts('text/html'), 'accepts text/html' );
         ok( $request->accepts('image/png'), 'accepts image/png' );
         ok( ! $request->accepts('image/svg'), 'does not accept image/svg' );
@@ -113,7 +110,6 @@ for my $class ( $anon_class, 'Catalyst::Request::REST' ) {
                          application/json
                        ) ],
                    'accept header is parsed properly, and accept header has precedence over content-type' );
-        ok( ! $request->accept_only, 'accept_only is false' );
     }
 
     {
@@ -139,7 +135,6 @@ for my $class ( $anon_class, 'Catalyst::Request::REST' ) {
                          application/json
                        ) ],
                    'accept header is parsed properly, and accept header has precedence over content-type' );
-        ok( ! $request->accept_only, 'accept_only is false' );
     }
 
     {
